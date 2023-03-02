@@ -1,3 +1,4 @@
+import css from './App.module.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 import Notiflix from 'notiflix';
@@ -34,7 +35,9 @@ export class App extends Component {
     this.setState({ loading: true });
     try {
       axios
-        .get(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}&page=${page}&${SEARCH_PARAMS}`)
+        .get(
+          `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&page=${page}&${SEARCH_PARAMS}`
+        )
         .then(response => {
           if (!response.data.hits.length) {
             Notiflix.Notify.failure('No image found!');
@@ -68,7 +71,7 @@ export class App extends Component {
   render() {
     const { hits, showModal, loading, largeImageURL, tags } = this.state;
     return (
-      <div>
+      <div className={css.box}>
         <Searchbar onSubmit={this.getValue} />
         {loading && <Loader />}
         {hits && (

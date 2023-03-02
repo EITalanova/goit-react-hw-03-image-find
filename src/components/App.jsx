@@ -1,4 +1,4 @@
-import css from './App.module.css';
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import Notiflix from 'notiflix';
@@ -71,7 +71,7 @@ export class App extends Component {
   render() {
     const { hits, showModal, loading, largeImageURL, tags } = this.state;
     return (
-      <div className={css.box}>
+      <div>
         <Searchbar onSubmit={this.getValue} />
         {loading && <Loader />}
         {hits && (

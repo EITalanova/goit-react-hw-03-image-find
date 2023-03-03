@@ -23,7 +23,6 @@ export class App extends Component {
     largeImageURL: '',
     tags: '',
   };
-
   toggleModal = (imageURL, tag) => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
@@ -34,6 +33,7 @@ export class App extends Component {
 
   getValue = ({ searchQuery, page }) => {
     this.setState({ loading: true });
+  
     try {
       axios
         .get(
@@ -51,6 +51,7 @@ export class App extends Component {
           } else {
             this.setState(prevState => ({
               hits: response.data.hits,
+              totalHits: response.data.totalHits,
               searchQuery: searchQuery,
               page: prevState.page + 1,
             }));
@@ -70,7 +71,8 @@ export class App extends Component {
   };
 
   render() {
-    const { hits, showModal, loading, largeImageURL, tags, per_page } = this.state;
+
+    const { hits, showModal, loading, largeImageURL, tags, per_page, page, totalHits } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.getValue} />
@@ -85,7 +87,7 @@ export class App extends Component {
           <Modal onClose={this.toggleModal} url={largeImageURL} alt={tags} />
         )}
 
-        {hits.length > per_page-1 && <Button onClick={() => this.loadMore()} />}
+        {page < Math.ceil(totalHits / per_page)  && <Button onClick={() => this.loadMore()} />}
       </div>
     );
   }

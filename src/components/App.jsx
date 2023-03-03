@@ -17,6 +17,7 @@ export class App extends Component {
     hits: [],
     searchQuery: '',
     page: 1,
+    per_page: 12,
     showModal: false,
     loading: false,
     largeImageURL: '',
@@ -69,7 +70,7 @@ export class App extends Component {
   };
 
   render() {
-    const { hits, showModal, loading, largeImageURL, tags } = this.state;
+    const { hits, showModal, loading, largeImageURL, tags, per_page } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.getValue} />
@@ -84,7 +85,7 @@ export class App extends Component {
           <Modal onClose={this.toggleModal} url={largeImageURL} alt={tags} />
         )}
 
-        {hits.length > 0 && <Button onClick={() => this.loadMore()} />}
+        {hits.length > per_page-1 && <Button onClick={() => this.loadMore()} />}
       </div>
     );
   }
